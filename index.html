@@ -3,196 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Une lettre pour toi</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-
 <style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #2f241d;
+        overflow: hidden;
+        font-family: 'Cormorant Garamond', serif;
+    }
 
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#2f241d;
-    overflow:hidden;
-    font-family:'Cormorant Garamond',serif;
-}
+    .container {
+        text-align: center;
+    }
 
-.container{
-    text-align:center;
-}
+    .message {
+        color: white;
+        margin-bottom: 25px;
+        font-size: 22px;
+    }
 
-.message{
-    color:white;
-    margin-bottom:25px;
-    font-size:22px;
-}
+    .envelope {
+        width: 380px;
+        height: 260px;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+    }
 
-.envelope{
-    width:380px;
-    height:260px;
-    position:relative;
-    cursor:pointer;
-    overflow:hidden;
-}
+    .back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #e8dbc8;
+        border-radius: 4px;
+        box-shadow: 0 20px 40px rgba(0,0,0,.3);
+    }
 
-.back{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background:#e8dbc8;
-    border-radius:4px;
-    box-shadow:0 20px 40px rgba(0,0,0,.3);
-}
+    .flap {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 190px solid transparent;
+        border-right: 190px solid transparent;
+        border-top: 130px solid #d8c3a7;
+        transform-origin: top;
+        transition: 1.5s;
+        z-index: 3;
+    }
 
-.flap{
-    position:absolute;
-    width:0;
-    height:0;
-    border-left:190px solid transparent;
-    border-right:190px solid transparent;
-    border-top:130px solid #d8c3a7;
-    transform-origin:top;
-    transition:1.5s;
-    z-index:3;
-}
+    .seal {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        background: #8d1f1f;
+        border-radius: 50%;
+        left: 50%;
+        top: 95px;
+        transform: translateX(-50%);
+        z-index: 4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        box-shadow: 0 0 15px rgba(0,0,0,.3);
+    }
 
-.seal{
-    position:absolute;
-    width:70px;
-    height:70px;
-    background:#8d1f1f;
-    border-radius:50%;
-    left:50%;
-    top:95px;
-    transform:translateX(-50%);
-    z-index:4;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    font-size:24px;
-    box-shadow:0 0 15px rgba(0,0,0,.3);
-}
+    .letter {
+        position: absolute;
+        width: 320px;
+        height: 520px;
+        background: #fdfaf2;
+        left: 30px;
+        top: 20px;
+        padding: 35px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        transform: translateY(220px);
+        opacity: 0;
+        transition: 2s;
+        z-index: 2;
+        text-align: left;
+        line-height: 1.6;
+        box-shadow: 0 10px 20px rgba(0,0,0,.2);
+    }
 
-.letter{
-    position:absolute;
-    width:320px;
-    height:520px;
-    background:#fdfaf2;
-    left:30px;
-    top:20px;
-    padding:35px;
-    box-sizing:border-box;
-    overflow:auto;
-    transform:translateY(220px);
-    opacity:0;
-    transition:2s;
-    z-index:2;
-    text-align:left;
-    line-height:1.6;
-    box-shadow:0 10px 20px rgba(0,0,0,.2);
-}
+    /* Style personnalisé pour la barre de défilement de la lettre */
+    .letter::-webkit-scrollbar {
+        width: 6px;
+    }
+    .letter::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .letter::-webkit-scrollbar-thumb {
+        background-color: #d8c3a7;
+        border-radius: 10px;
+    }
 
-.date{
-    text-align:right;
-    margin-bottom:20px;
-}
+    .date {
+        text-align: right;
+        margin-bottom: 20px;
+    }
 
-.signature{
-    font-family:'Great Vibes',cursive;
-    font-size:42px;
-    margin-top:40px;
-}
+    .signature {
+        font-family: 'Great Vibes', cursive;
+        font-size: 42px;
+        margin-top: 40px;
+    }
 
-.open .flap{
-    transform:rotateX(180deg);
-}
+    .open .flap {
+        transform: rotateX(180deg);
+    }
 
-.open .seal{
-    opacity:0;
-    transition:0.5s;
-}
+    .open .seal {
+        opacity: 0;
+        transition: 0.5s;
+    }
 
-.open .letter{
-    transform:translateY(-320px);
-    opacity:1;
-}
+    .open .letter {
+        transform: translateY(-320px);
+        opacity: 1;
+    }
 
+    /* Adaptation pour les écrans de téléphone */
+    @media (max-width: 400px) {
+        .envelope {
+            transform: scale(0.85);
+        }
+    }
 </style>
 </head>
 
 <body>
 
 <div class="container">
+    <div class="message">📬 Une lettre vous attend</div>
 
-<div class="message">
-📬 Une lettre vous attend
-</div>
-
-<div class="envelope" onclick="openLetter()">
-
-<div class="back"></div>
-
-<div class="flap"></div>
-
-<div class="seal">✦</div>
-
-<div class="letter">
-
-<div class="date">
-Août 2025
-</div>
-
-<h2>Pour Sou</h2>
-
-<p>
-Lettre à Sou
-</p>
-<p>Bon j'ai peur que cette note soit très brouillon, c'est la 4ème version que je fais car à chaque fois je m'emmêle les pinceaux, si jamais il y a certains points que tu ne comprends pas n'hésite pas à me le dire, j'écris un peu comme ça me vient, j'avais fait un plan mais ça me saoule de respecter ça. Je sais que t'aimes pas trop ce côté ou je fais l'intelligent ou je me "force" à bien écrire pour en avoir l'apparence donc je vais dire les choses comme elles me viennent. 
-</p>
-<p>Le premier point que je voulais traiter c'était les jeux vidéos. Pour être honnête je ne t'en veux pas si tu me vois comme un geek, le jeu vidéo ça a toujours un peu été mon échappatoire, et je passe énormément dessus parce que ça m'empêche de réfléchir au reste, ça m'occupe l'esprit, ça me stimule niveau réflexion et ça me challenge un peu. Je pense qu'au fond je suis addict, mais je suis aussi convaincu que c'est quelque chose qui va s'estomper avec le temps. Pour le moment j'aime bien passer une partie de mon temps libre dessus et je peux comprendre que certains comme toi trouvent cette partie trop grande mais tant que je ne suis pas en cours ou quoi c'est comme ça que j'aime passer mon temps. Il est aussi vrai que je fonctionne peut-être comme ça comme je n'ai jamais fait différemment mais bon ça je ne le sais pas encore j'imagine. Donc oui je m'apparente à un geek et j'en suis même très certainement un mais comprends que c'est surement comme je considère que je n'ai rien de mieux à faire. 
-</p>
-<p>Toujours sur le jeu vidéo, je me permets juste de faire une parenthèse, oui ce n'est pas quelque chose d'important mais quand je fais quelque chose j'aime bien la faire à fond, et c'est aussi pour ça que j'ai pu parfois avoir du mal à répondre (pendant les games). Hors game ou entre les games c'est une autre histoire et je n'ai pas vraiment d'excuse hormis le fait que je suis en voc avec Théo et qu'on discute donc je pense pas spécialement à envoyer un message mais encore une fois ça n'excuse pas tout. 
-</p>
-<p>Maintenant je veux revenir sur deux points qui te concernent dont tu parles dans tes messages. Le premier c'est les sorties IRL et le deuxième c'est ma perception de ton temps. Ducoup pour les sorties IRL, premièrement ça n'a rien à voir avec le fait que tu me dégoutes ou ce genre de bêtises que j'ai pu lire dans tes notes, tu ne me dégoutes pas, j'ai même dit que tu avais un beau sourire, un beau corps et des beaux yeux / cils, après tu n'es pas forcement mon style mais tout comme je ne suis pas le tien et ça on s'en fiche puisqu'on est amis n'est ce pas ? La raison pour laquelle j'ai un peu évité le sujet des sorties IRL c'est parce que comme je te l'ai dit j'ai besoin d'être sur d'une stabilité avec la personne pour le faire, et récemment ce n'est pas quelque chose que j'ai ressenti. Par ma faute certainement mais la raison reste la même. De plus, ça représente un peu une étape pour moi car je n'ai jamais rencontré aucun de mes amis virtu, même les plus anciens, je connais Théo depuis + de 10 ans on ne s'est jamais vus, Liam 8 ans jamais, Flora 6 ans jamais, même si on sait tous à quoi chacun ressemble on n'a jamais franchi cette étape et je pense qu'elle me fait aussi peur. L'idée que ce ne soit pas comme en ligne, que ça gâche quelque chose me fait peur et c'est la raison que je me trouve en tout cas. Libre à toi de la trouver valable ou non mais sincèrement je le pense Sou. 
-</p>
-<p>Ensuite pour ce qui est de ma vision de ton temps, j'avoue que sur ce point là et c'est certainement le seul, je n'étais pas trop d'accord avec toi. Je n'ai jamais pensé que ton temps était moins important que le mien. Comme tu l'as dit tu faisais souvent des vrais trucs, pas volatiles comme moi et je ne pense jamais t'avoir pressée à répondre ou quoique ce soit de ce genre. Il y a un truc que tu faisais pour moi que je ne fais jamais je l'avoue, c'est ne rien envoyer en me disant "elle fait ceci ou cela et ne pourra pas répondre". Moi j'envoie et j'estime que les gens à qui je parle sont assez grands pour répondre quand ils peuvent / quand ils veulent, que ce soit 10 secondes ou 4 heures plus tard. Donc si sur ça je t'ai fait te sentir dévalorisée je m'excuse, mais je ne le voyais pas du tout comme ça. Et mon temps à moi n'est pas important encore une fois, je jouais la plupart du temps donc bon….
-</p>
-<p>Maintenant je vais un peu développer sur le cœur du problème entre nous selon moi. Je vais essayer de le formuler simplement : ce n'est pas toi qui en faisait trop pour moi comme j'ai pu le dire (même si tu en faisais beaucoup j'en suis conscient ne t'en fais pas) mais c'est surtout moi qui ne savait pas accueillir autant d'attention et d'amour. Tu as fait de moi une priorité là où moi j'en ai été incapable. Je ne pense pas que je ne l'ai pas fait parce que je n'en avais pas envie, mais plutôt parce que je ne savais pas comment m'y prendre. Tu vas très certainement te dire que je veux juste attirer de la pitié, mais je n'ai jamais vraiment été la priorité de quelqu'un. Encore aujourd'hui, ceux que je considère comme mes plus proches amis, mes meilleurs amis (William et Anthony), la réalité c'est que beaucoup de personnes les considéreraient comme des simples amis s'ils étaient à ma place et voyaient notre lien. Je n'ai jamais vraiment eu ce sentiment d'être choisi par quelqu'un, et je pense que je l'ai vraiment ressenti pleinement pour la première fois avec toi mais je ne savais pas comment l'accueillir. Au début j'ai je pense essayé de te copier, mais très vite j'ai du involontairement te mettre dans la même case que d'autres bons amis et j'ai adapté mon attention, ma présence, mon investissement dans la relation en comparant probablement aux autres encore une fois par automatisme. La vérité c'est que je suis incapable de gérer une relation ou l'autre personne me considère vraiment et s'investit vraiment. Tu dois te dire que je fais pitié mais une fois de plus je le pense vraiment, et ça vient probablement d'un gros manque de confiance en moi qui vient de plusieurs choses liées à mon enfance je pense. C'est pour ça que comme je te l'ai dit aujourd'hui je pense que le problème c'était pas spécialement toi mais plus moi. 
-</p>
-<p>Dans ce sens, il était injuste de ma part de t'avoir fait penser que tu en faisais trop, parce que comme tu l'as dit, on n'aime pas quelqu'un par phases, et je te l'ai certainement et malheureusement fait ressentir comme ça de mon côté et pour ça aussi, excuse moi Sou. Je ne pense pas t'avoir aimée différemment, mais je prends conscience aujourd'hui d'à quel point ma manière de te montrer comment je te percevais pouvait changer rapidement. Je t'en avais très légèrement parlé par le passé mais sur ça je suis instable et je conscientise que c'est insupportable, surtout pour toi qui me donnait du temps, faisait des efforts etc. Sache que même si mes attitudes changeaient, mon amour pour toi lui n'a pas changé et je t'ai toujours appréciée de la même manière, avec tes bons et mauvais côtés. Tout ce que tu m'envoyais, les messages, les snaps, les vocaux, rien de tout ça ne représentait un "poids" pour moi Sou, rien je te le promets, même si de par mon attitude j'ai du à de multiples reprises te faire penser le contraire. Je n'ai pas essayé de te contacter "quand ça m'arrangeait" et je ne cherchais surtout pas à te faire douter de toi. 
-</p>
-<p>Je sais que les excuses que je présente dans cette note ne vont pas te paraître sincères mais crois moi Sou je prends conscience du mal que j'ai pu te faire. Je reste persuadé que je ne souhaite que ton bonheur et ta réussite, et je prends en compte aussi le coup de frein que tu as pu mettre sur tes projets / ton développement perso pour moi et pour ça je te remercie. J'ai certainement de mon côté aussi fait certains efforts malgré tout pour nous mais ils sont très probablement minimes en comparaison avec les tiens. 
-</p>
-<p>Une chose est sure, je pense que je serai et resterai incapable de gérer autant d'attention ou bien il me faudra beaucoup de temps et je ne suis pas sûr que tu aies envie d'en investir autant. Ma vie actuellement est beaucoup trop instable que ce soit chez moi avec mes parents, professionnellement tant que je n'aurais pas trouvé de stage ou bien socialement vis à vis de mon côté solo. Il est vrai, tu as su faire des efforts dans des domaines ou tu étais sur le papier plus intransigeante, mais je pense aussi que tu avais déjà vécu des situations similaires avec tes anciennes relations, alors que tout ça est nouveau pour moi. Ton amour n'est un poids pour personne Sou, mais je ne sais juste pas si je suis la meilleure personne pour te le faire comprendre. 
-</p>
-<p>Dans tous les cas, sois certaine que toutes les bonnes choses que j'ai pu dire sur toi, je les pensais et les pense toujours, je suis sérieusement désolé Sou, tu ne mérites pas ça.
-</p>
-<p>Je t'aime fort, et j'espère ne plus jamais te faire du mal, car tu es un personne magnifique, que tu veuilles l'entendre, ou non. Je suis juste nul, très nul, quand il s'agit d'accepter l'amour des autres, et aussi quand il s'agit de leur montrer que je les aime au même niveau.  
-</p>
-<p>Gros bisous Soupi, je suis un gamin oui, mais un gamin qui t'aime fort. </p>
-
-<p>Alexandre. 🩵​💜</p>
-
-<p>Ps : j'espère que tu ne m'en veux pas pour la forme, je voulais faire quelque chose d'original. </p>
-
-<div class="signature">
-Alexandre ou Haïko c'est toi qui décides. 
-</div>
-
-</div>
-
-</div>
-
+    <div class="envelope" onclick="openLetter()">
+        <div class="back"></div>
+        <div class="flap"></div>
+        <div class="seal">✦</div>
+        
+        <div class="letter">
+            <div class="date">Août 2025</div>
+            <h2>Pour Sou</h2>
+            <p>Lettre à Sou</p>
+            <p>Bon j'ai peur que cette note soit très brouillon, c'est la 4ème version que je fais car à chaque fois je m'emmêle les pinceaux, si jamais il y a certains points que tu ne comprends pas n'hésite pas à me le dire, j'écris un peu comme ça me vient, j'avais fait un plan mais ça me soûle de respecter ça. Je sais que t'aimes pas trop ce côté où je fais l'intelligent ou je me "force" à bien écrire pour en avoir l'apparence donc je vais dire les choses comme elles me viennent. </p>
+            <p>Le premier point que je voulais traiter c'était les jeux vidéo. Pour être honnête je ne t'en veux pas si tu me vois comme un geek, le jeu vidéo ça a toujours un peu été mon échappatoire, et je passe énormément de temps dessus parce que ça m'empêche de réfléchir au reste, ça m'occupe l'esprit, ça me stimule niveau réflexion et ça me challenge un peu. Je pense qu'au fond je suis addict, mais je suis aussi convaincu que c'est quelque chose qui va s'estomper avec le temps. Pour le moment j'aime bien passer une partie de mon temps libre dessus et je peux comprendre que certains comme toi trouvent cette partie trop grande, mais tant que je ne suis pas en cours ou quoi c'est comme ça que j'aime passer mon temps. Il est aussi vrai que je fonctionne peut-être comme ça comme je n'ai jamais fait différemment mais bon ça je ne le sais pas encore j'imagine. Donc oui je m'apparente à un geek et j'en suis même très certainement un mais comprends que c'est sûrement comme je considère que je n'ai rien de mieux à faire. </p>
+            <p>Toujours sur le jeu vidéo, je me permets juste de faire une parenthèse, oui ce n'est pas quelque chose d'important mais quand je fais quelque chose j'aime bien la faire à fond, et c'est aussi pour ça que j'ai pu parfois avoir du mal à répondre (pendant les games). Hors game ou entre les games c'est une autre histoire et je n'ai pas vraiment d'excuse hormis le fait que je suis en voc avec Théo et qu'on discute donc je ne pense pas spécialement à envoyer un message mais encore une fois ça n'excuse pas tout. </p>
+            <p>Maintenant je veux revenir sur deux points qui te concernent dont tu parles dans tes messages. Le premier c'est les sorties IRL et le deuxième c'est ma perception de ton temps. Du coup pour les sorties IRL, premièrement ça n'a rien à voir avec le fait que tu me dégoûtes ou ce genre de bêtises que j'ai pu lire dans tes notes, tu ne me dégoûtes pas, j'ai même dit que tu avais un beau sourire, un beau corps et de beaux yeux / cils, après tu n'es pas forcément mon style mais tout comme je ne suis pas le tien et ça on s'en fiche puisqu'on est amis n'est-ce pas ? La raison pour laquelle j'ai un peu évité le sujet des sorties IRL c'est parce que comme je te l'ai dit j'ai besoin d'être sûr d'une stabilité avec la personne pour le faire, et récemment ce n'est pas quelque chose que j'ai ressenti. Par ma faute certainement mais la raison reste la même. De plus, ça représente un peu une étape pour moi car je n'ai jamais rencontré aucun de mes amis virtuels, même les plus anciens, je connais Théo depuis + de 10 ans on ne s'est jamais vus, Liam 8 ans jamais, Flora 6 ans jamais, même si on sait tous à quoi chacun ressemble on n'a jamais franchi cette étape et je pense qu'elle me fait aussi peur. L'idée que ce ne soit pas comme en ligne, que ça gâche quelque chose me fait peur et c'est la raison que je me trouve en tout cas. Libre à toi de la trouver valable ou non mais sincèrement je le pense Sou. </p>
+            <p>Ensuite pour ce qui est de ma vision de ton temps, j'avoue que sur ce point-là et c'est certainement le seul, je n'étais pas trop d'accord avec toi. Je n'ai jamais pensé que ton temps était moins important que le mien. Comme tu l'as dit tu faisais souvent des vrais trucs, pas volatiles comme moi et je ne pense jamais t'avoir pressée à répondre ou quoique ce soit de ce genre. Il y a un truc que tu faisais pour moi que je ne fais jamais je l'avoue, c'est ne rien envoyer en me disant "elle fait ceci ou cela et ne pourra pas répondre". Moi j'envoie et j'estime que les gens à qui je parle sont assez grands pour répondre quand ils peuvent / quand ils veulent, que ce soit 10 secondes ou 4 heures plus tard. Donc si sur ça je t'ai fait te sentir dévalorisée je m'excuse, mais je ne le voyais pas du tout comme ça. Et mon temps à moi n'est pas important encore une fois, je jouais la plupart du temps donc bon… </p>
+            <p>Maintenant je vais un peu développer sur le cœur du problème entre nous selon moi. Je vais essayer de le formuler simplement : ce n'est pas toi qui en faisais trop pour moi comme j'ai pu le dire (même si tu en faisais beaucoup j'en suis conscient ne t'en fais pas) mais c'est surtout moi qui ne savais pas accueillir autant d'attention et d'amour. Tu as fait de moi une priorité là où moi j'en ai été incapable. Je ne pense pas que je ne l'ai pas fait parce que je n'en avais pas envie, mais plutôt parce que je ne savais pas comment m'y prendre. Tu vas très certainement te dire que je veux juste attirer de la pitié, mais je n'ai jamais vraiment été la priorité de quelqu'un. Encore aujourd'hui, ceux que je considère comme mes plus proches amis, mes meilleurs amis (William et Anthony), la réalité c'est que beaucoup de personnes les considéreraient comme de simples amis s'ils étaient à ma place et voyaient notre lien. Je n'ai jamais vraiment eu ce sentiment d'être choisi par quelqu'un, et je pense que je l'ai vraiment ressenti pleinement pour la première fois avec toi mais je ne savais pas comment l'accueillir. Au début j'ai je pense essayé de te copier, mais très vite j'ai dû involontairement te mettre dans la même case que d'autres bons amis et j'ai adapté mon attention, ma présence, mon investissement dans la relation en comparant probablement aux autres encore une fois par automatisme. La vérité c'est que je suis incapable de gérer une relation où l'autre personne me considère vraiment et s'investit vraiment. Tu dois te dire que je fais pitié mais une fois de plus je le pense vraiment, et ça vient probablement d'un gros manque de confiance en moi qui vient de plusieurs choses liées à mon enfance je pense. C'est pour ça que comme je te l'ai dit aujourd'hui je pense que le problème c'était pas spécialement toi mais plus moi. </p>
+            <p>Dans ce sens, il était injuste de ma part de t'avoir fait penser que tu en faisais trop, parce que comme tu l'as dit, on n'aime pas quelqu'un par phases, et je te l'ai certainement et malheureusement fait ressentir comme ça de mon côté et pour ça aussi, excuse-moi Sou. Je ne pense pas t'avoir aimée différemment, mais je prends conscience aujourd'hui d'à quel point ma manière de te montrer comment je te percevais pouvait changer rapidement. Je t'en avais très légèrement parlé par le passé mais sur ça je suis instable et je conscientise que c'est insupportable, surtout pour toi qui me donnais du temps, faisais des efforts etc. Sache que même si mes attitudes changeaient, mon amour pour toi, lui, n'a pas changé et je t'ai toujours appréciée de la même manière, avec tes bons et mauvais côtés. Tout ce que tu m'envoyais, les messages, les snaps, les vocaux, rien de tout ça ne représentait un "poids" pour moi Sou, rien je te le promets, même si de par mon attitude j'ai dû à de multiples reprises te faire penser le contraire. Je n'ai pas essayé de te contacter "quand ça m'arrangeait" et je ne cherchais surtout pas à te faire douter de toi. </p>
+            <p>Je sais que les excuses que je présente dans cette note ne vont pas te paraître sincères mais crois-moi Sou je prends conscience du mal que j'ai pu te faire. Je reste persuadé que je ne souhaite que ton bonheur et ta réussite, et je prends en compte aussi le coup de frein que tu as pu mettre sur tes projets / ton développement perso pour moi et pour ça je te remercie. J'ai certainement de mon côté aussi fait certains efforts malgré tout pour nous mais ils sont très probablement minimes en comparaison avec les tiens. </p>
+            <p>Une chose est sûre, je pense que je serai et resterai incapable de gérer autant d'attention ou bien il me faudra beaucoup de temps et je ne suis pas sûr que tu aies envie d'en investir autant. Ma vie actuellement est beaucoup trop instable que ce soit chez moi avec mes parents, professionnellement tant que je n'aurai pas trouvé de stage ou bien socialement vis-à-vis de mon côté solo. Il est vrai, tu as su faire des efforts dans des domaines où tu étais sur le papier plus intransigeante, mais je pense aussi que tu avais déjà vécu des situations similaires avec tes anciennes relations, alors que tout ça est nouveau pour moi. Ton amour n'est un poids pour personne Sou, mais je ne sais juste pas si je suis la meilleure personne pour te le faire comprendre. </p>
+            <p>Dans tous les cas, sois certaine que toutes les bonnes choses que j'ai pu dire sur toi, je les pensais et les pense toujours, je suis sérieusement désolé Sou, tu ne mérites pas ça. </p>
+            <p>Je t'aime fort, et j'espère ne plus jamais te faire de mal, car tu es une personne magnifique, que tu veuilles l'entendre, ou non. Je suis juste nul, très nul, quand il s'agit d'accepter l'amour des autres, et aussi quand il s'agit de leur montrer que je les aime au même niveau.  </p>
+            <p>Gros bisous Soupi, je suis un gamin oui, mais un gamin qui t'aime fort.</p>
+            <p>Alexandre. 🩵​💜</p>
+            <p>Ps : j'espère que tu ne m'en veux pas pour la forme, je voulais faire quelque chose d'original.</p>
+            <div class="signature">Alexandre ou Haïko c'est toi qui décides.</div>
+        </div>
+    </div>
 </div>
 
 <script>
 function openLetter(){
-document.querySelector('.envelope').classList.add('open');
+    document.querySelector('.envelope').classList.add('open');
 }
 </script>
 
